@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lapak ID Cantik FF</title>
+  <!-- Tailwind CSS CDN untuk tampilan modern & cepat -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- FontAwesome untuk ikon -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="bg-gray-900 text-white min-h-screen font-sans">
+
+  <!-- Header / Navbar -->
+  <header class="bg-gray-800 border-b border-gray-700 py-4 px-6 sticky top-0 z-50">
+    <div class="max-w-6xl mx-auto flex justify-between items-center">
+      <h1 class="text-2xl font-bold text-yellow-400 flex items-center gap-2">
+        <i class="fa-solid font-fire text-red-500"></i> Store ID Cantik FF
+      </h1>
+      <a id="wa-admin-btn" href="#" target="_blank" class="bg-green-600 hover:bg-green-500 text-white px-4 py-2 rounded-lg font-semibold text-sm flex items-center gap-2 transition">
+        <i class="fa-brands fa-whatsapp text-lg"></i> Hubungi Admin
+      </a>
+    </div>
+  </header>
+
+  <!-- Hero & Search Section -->
+  <main class="max-w-6xl mx-auto px-4 py-8">
+    <div class="text-center mb-8">
+      <h2 class="text-3xl md:text-4xl font-extrabold mb-2">Cari & Beli ID Cantik Free Fire BY WAFIQ
+      <p class="text-gray-400">Transaksi cepat, aman, dan langsung terhubung ke WhatsApp Admin.</p>
+      
+      <!-- Input Pencarian -->
+      <div class="mt-6 max-w-md mx-auto relative">
+        <input 
+          type="text" 
+          id="search-input" 
+          placeholder="Cari kombinasi ID (contoh: 1234)..." 
+          class="w-full bg-gray-800 border border-gray-700 rounded-xl py-3 px-4 pl-10 text-white placeholder-gray-500 focus:outline-none focus:border-yellow-400 shadow-inner"
+          oninput="filterAccounts()"
+        >
+        <i class="fa-solid fa-magnifying-glass absolute left-3 top-3.5 text-gray-500"></i>
+      </div>
+    </div>
+
+    <!-- Katalog Akun ID -->
+    <div id="account-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <!-- Item ID akan dirender secara dinamis lewat JavaScript -->
+    </div>
+
+    <!-- Tampilan jika tidak ditemukan -->
+    <div id="no-result" class="hidden text-center py-12 text-gray-400">
+      <i class="fa-solid fa-ghost text-4xl mb-3 block"></i>
+      <p>ID yang kamu cari belum tersedia.</p>
+    </div>
+  </main>
+
+  <script>
+    // ==========================================
+    // 1. PENGATURAN ADMIN (Ubah nomor WhatsApp di sini)
+    // Format nomor: 628xxxxxxxxxx (Tanpa tanda + / angka 0 di depan)
+    // ==========================================
+    const nomorWA = "6285122093823"; 
+
+    // Update link WA Admin di Header
+    document.getElementById("wa-admin-btn").href = `https://wa.me/${nomorWA}?text=Halo%20Admin,%20saya%20mau%20tanya%20stok%20ID%20Cantik%20FF`;
+
+    // ==========================================
+    // 2. DAFTAR STOK ID CANTIK FF
+    // Kamu tinggal tambah / edit data di bawah ini:
+    // ==========================================
+    const dataAkun = [
+      { id: "16555559911", harga: "10.000", tag: "Urut / Rapi", status: "Ready" },
+      { id: "16555588812",  harga: "10.000", tag: "Kembar",     status: "Ready" },
+      { id: "16555444410",  harga: "10.000", tag: "Super Rare", status: "Ready" },
+      { id: "16155555536",  harga: "10.000", tag: "Pola Doubel", status: "Ready" },
+      { id: "8881118881",  harga: "20.000", tag: "Kombinasi",  status: "Ready" },
+      { id: "1000000001",  harga: "30.000", tag: "Awal & Akhir", status: "Ready" }
+    ];
+
+    // Fungsi Render Katalog ke Tampilan Web
+    function renderGrid(items) {
+      const grid = document.getElementById("account-grid");
+      const noResult = document.getElementById("no-result");
+      grid.innerHTML = "";
+
+      if (items.length === 0) {
+        noResult.classList.remove("hidden");
+        return;
+      }
+      noResult.classList.add("hidden");
+
+      items.forEach(item => {
+        // Format pesan WhatsApp otomatis
+        const pesanWA = encodeURIComponent(`Halo Admin, saya berminat membeli ID Cantik FF berikut:\n\n- ID: ${item.id}\n- Harga: Rp ${item.harga}\n\nApakah stok masih ready?`);
+        const linkOrder = `https://wa.me/${nomorWA}?text=${pesanWA}`;
+
+        const card = `
+          <div class="bg-gray-800 border border-gray-700 rounded-2xl p-5 shadow-lg hover:border-yellow-400 transition flex flex-col justify-between">
+            <div>
+              <div class="flex justify-between items-center mb-3">
+                <span class="bg-yellow-400/10 text-yellow-400 text-xs font-semibold px-2.5 py-1 rounded-full border border-yellow-400/20">
+                  ${item.tag}
+                </span>
+                <span class="text-xs text-green-400 font-medium flex items-center gap-1">
+                  <span class="w-2 h-2 bg-green-400 rounded-full animate-pulse"></span> ${item.status}
+                </span>
+              </div>
+              <p class="text-gray-400 text-xs font-semibold uppercase">Nomor ID Free Fire</p>
+              <h3 class="text-2xl font-black tracking-wider text-white mt-1 mb-4 select-all">
+                ${item.id}
+              </h3>
+            </div>
+            
+            <div class="pt-4 border-t border-gray-700/50 flex justify-between items-center">
+              <div>
+                <p class="text-xs text-gray-400">Harga</p>
+                <p class="text-lg font-bold text-yellow-400">Rp ${item.harga}</p>
+              </div>
+              <a href="${linkOrder}" target="_blank" class="bg-green-600 hover:bg-green-500 text-white px-4 py-2 rounded-xl text-sm font-semibold transition flex items-center gap-2">
+                <i class="fa-brands fa-whatsapp"></i> Beli
+              </a>
+            </div>
+          </div>
+        `;
+        grid.innerHTML += card;
+      });
+    }
+
+    // Fungsi Filter Pencarian Live
+    function filterAccounts() {
+      const keyword = document.getElementById("search-input").value.toLowerCase();
+      const filtered = dataAkun.filter(item => item.id.includes(keyword));
+      renderGrid(filtered);
+    }
+
+    // Jalankan render pertama kali
+    renderGrid(dataAkun);
+  </script>
+</body>
+</html>
